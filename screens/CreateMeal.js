@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Modal } from 'react-native';
 import { TextInput, Button } from 'react-native-paper'
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+// import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const CreateMeal = () => {
     const [Meal, setMeal] = useState("")
@@ -9,7 +9,6 @@ const CreateMeal = () => {
     const [Slave, setSlave] = useState("")
     const [modal, setModal] = useState(false)
 
-    
     return (
         <View style={styles.root}>
             <TextInput
