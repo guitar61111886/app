@@ -29,20 +29,35 @@ app.get('/', (req, res) => {
 
 app.post('/send-data', (req, res) => {
     const information = new Information({
-        meal:req.body.meal,
-        slave:req.body.slave,
-        time:req.body.time
+        meal: req.body.meal,
+        slave: req.body.slave,
+        time: req.body.time
     })
     information.save()
-    .then(data=>{
-        console.log(data)
-        res.send("success")
-    }).catch(err=>{
-        console.log(err)
-    })
+        .then(data => {
+            console.log(data)
+            res.send("success")
+        }).catch(err => {
+            console.log(err)
+        })
     // console.log(req.body)
 })
 
-app.listen(3000, () => {
+app.post('/delete', (req, res) => {
+    Information.findByIdAndRemove(req.body.id)
+        .then(data => {
+            console.log(data)
+            res.send("deleted")
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+
+    app.listen(3000, () => {
     console.log("server running")
 })
+
+        // "meal":"beforBreakfast",
+        // "slave":"S1",
+        // "time":"11:00"
