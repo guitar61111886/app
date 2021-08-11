@@ -9,6 +9,8 @@ const CreateMeal = () => {
     const [Slave, setSlave] = useState("")
     const [modal, setModal] = useState(false)
 
+    
+
     return (
         <View style={styles.root}>
             <TextInput
