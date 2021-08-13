@@ -1,29 +1,30 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Modal } from 'react-native';
+import { View, StyleSheet, Text, Modal, Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper'
 // import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const CreateMeal = () => {
-    const [Meal, setMeal] = useState("")
-    const [Time, setTime] = useState("")
-    const [Slave, setSlave] = useState("")
+    const [meal, setMeal] = useState("")
+    const [time, setTime] = useState("")
+    const [slave, setSlave] = useState("")
     const [modal, setModal] = useState(false)
 
     const submitData = () => {
-        fetch("http://localhost:3000/send-data", {
-            method: "post",
+        fetch("http://172.20.10.5:3000/send-data", {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                meal: Meal,
-                time: Time,
-                slave: Slave
+                meal: meal,
+                time: time,
+                slave: slave
             })
         })
             .then((res) => res.json())
             .then(data => {
-                console.log(data)
+                Alert.alert('Form Data', data);
+                console.log(data);
             })
     }
 
@@ -32,28 +33,28 @@ const CreateMeal = () => {
             <TextInput
                 label="Meal"
                 style={styles.inputStyle}
-                value={Meal}
+                value={meal}
                 theme={theme}
                 mode="outlined"
-                onChangeText={text => setMeal({ text })}
+                onChangeText={text => setMeal(text)}
             />
 
             <TextInput
                 label="Time"
                 style={styles.inputStyle}
-                value={Time}
+                value={time}
                 theme={theme}
                 mode="outlined"
-                onChangeText={text => setTime({ text })}
+                onChangeText={text => setTime(text)}
             />
 
             <TextInput
                 label="Slave"
                 style={styles.inputStyle}
-                value={Slave}
+                value={slave}
                 theme={theme}
                 mode="outlined"
-                onChangeText={text => setSlave({ text })}
+                onChangeText={text => setSlave(text)}
             />
 
             {/* <View style={styles.uploadButton}>
