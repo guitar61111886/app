@@ -9,7 +9,23 @@ const CreateMeal = () => {
     const [Slave, setSlave] = useState("")
     const [modal, setModal] = useState(false)
 
-    
+    const submitData = () => {
+        fetch("http://localhost:3000/send-data", {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                meal: Meal,
+                time: Time,
+                slave: Slave
+            })
+        })
+            .then((res) => res.json())
+            .then(data => {
+                console.log(data)
+            })
+    }
 
     return (
         <View style={styles.root}>
@@ -40,19 +56,21 @@ const CreateMeal = () => {
                 onChangeText={text => setSlave({ text })}
             />
 
-            <View style={styles.uploadButton}>
+            {/* <View style={styles.uploadButton}>
                 <Button icon="upload"
                     mode="contained"
                     theme={theme}
                     onPress={() => setModal(true)}>
                     Upload Image
                 </Button>
-            </View>
+            </View> */}
+
             <View style={styles.saveButton}>
                 <Button icon="content-save"
                     mode="contained"
                     theme={theme}
-                    onPress={() => console.log("saved")}>
+                    // onPress={() => console.log("save")}>
+                    onPress={() => submitData()}>
                     Save
                 </Button>
             </View>

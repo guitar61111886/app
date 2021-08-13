@@ -24,20 +24,20 @@ mongoose.connection.on("error", (err) => {
 })
 
 app.get('/', (req, res) => {
-    Information.find({}).then(data => {
+    Information.find({}).then(data=>{
         res.send(data)
     })
-        // res.send("welcome to node js")
-        .catch(err => {
-            console.log(err)
-        })
+    // res.send("welcome to node js")
+    .catch(err => {
+        console.log(err)
+    })
 })
 
 app.post('/send-data', (req, res) => {
     const information = new Information({
         meal: req.body.meal,
-        slave: req.body.slave,
-        time: req.body.time
+        time: req.body.time,
+        slave: req.body.slave
     })
     information.save()
         .then(data => {
