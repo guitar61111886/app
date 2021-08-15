@@ -28,6 +28,9 @@ const CreateMeal = ({ navigation }) => {
                 Alert.alert(`${data.meal} is saved successfuly`)
                 navigation.navigate("Home")
             })
+            .catch(err => {
+                Alert.alert("Someting went wrong")
+            })
     }
 
     return (

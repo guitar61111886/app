@@ -1,6 +1,6 @@
 import { text } from 'express';
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image, FlatList, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Text, Image, FlatList, Alert } from 'react-native';
 import { Card, FAB } from 'react-native-paper';
 
 const Home = ({ navigation }) => {
@@ -21,13 +21,28 @@ const Home = ({ navigation }) => {
 
     const [data, setData] = useState([])
     const [loading, setloading] = useState(true)
-    useEffect(() => {
+
+    const fetchData = () => {
         fetch("http://172.20.10.5:3000/")
             .then(res => res.json())
             .then(results => {
+                console.log(results)
                 setData(results)
                 setloading(false)
+            }).catch(err => {
+                Alert.alert("Someting went wrong")
             })
+    }
+
+    useEffect(() => {
+        fetchData()
+        // fetch("http://172.20.10.5:3000/")
+        //     .then(res => res.json())
+        //     .then(results => {
+        //         console.log(results)
+        //         setData(results)
+        //         setloading(false)
+        //     })
     }, [])
 
     const renderList = ((item) => {
@@ -39,7 +54,7 @@ const Home = ({ navigation }) => {
                 <View style={styles.cardView}>
                     <Image
                         style={{ width: 60, height: 60, borderRadius: 30 }}
-                        source={{ uri: "https://images.unsplash.com/photo-1601914757958-84916c07e4c0?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2xvY2t8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" }}
+                        source={{ uri: "https://i.pinimg.com/736x/82/a6/ba/82a6bac99d3a9c2942724f5fc8dfca86.jpg" }}
                     />
                     <View style={{ marginLeft: 10 }}>
                         <Text style={styles.text}>{item.meal}</Text>
@@ -54,18 +69,15 @@ const Home = ({ navigation }) => {
     return (
         <View style={{ flex: 1 }}>
             {/* {renderList} */}
-            {loading ?
-                <ActivityIndicator size="large" color="#00ff00" />
-                :
-                <FlatList
-                    data={data}
-                    renderItem={({ item }) => {
-                        return renderList(item)
-                    }}
-                    keyExtractor={item => item._id}
-                />
-            }
-
+            <FlatList
+                data={data}
+                renderItem={({ item }) => {
+                    return renderList(item)
+                }}
+                keyExtractor={item => item._id}
+                onRefresh={()=>fetchData()}
+                refreshing={loading}
+            />
 
             <FAB onPress={() => navigation.navigate("Create")}
                 style={styles.fab}
