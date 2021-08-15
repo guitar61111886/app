@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Modal, Alert } from 'react-native';
+import { View, StyleSheet, Text, Modal, Alert, KeyboardAvoidingView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper'
 // import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
-const CreateMeal = () => {
+const CreateMeal = ({ navigation }) => {
     const [meal, setMeal] = useState("")
     const [time, setTime] = useState("")
     const [slave, setSlave] = useState("")
@@ -23,41 +23,44 @@ const CreateMeal = () => {
         })
             .then((res) => res.json())
             .then(data => {
-                Alert.alert('Form Data', data);
-                console.log(data);
+                // Alert.alert('Form Data', data);
+                // console.log(data);
+                Alert.alert(`${data.meal} is saved successfuly`)
+                navigation.navigate("Home")
             })
     }
 
     return (
         <View style={styles.root}>
-            <TextInput
-                label="Meal"
-                style={styles.inputStyle}
-                value={meal}
-                theme={theme}
-                mode="outlined"
-                onChangeText={text => setMeal(text)}
-            />
+            <KeyboardAvoidingView>
+                <TextInput
+                    label="Meal"
+                    style={styles.inputStyle}
+                    value={meal}
+                    theme={theme}
+                    mode="outlined"
+                    onChangeText={text => setMeal(text)}
+                />
 
-            <TextInput
-                label="Time"
-                style={styles.inputStyle}
-                value={time}
-                theme={theme}
-                mode="outlined"
-                onChangeText={text => setTime(text)}
-            />
+                <TextInput
+                    label="Time"
+                    style={styles.inputStyle}
+                    value={time}
+                    theme={theme}
+                    mode="outlined"
+                    onChangeText={text => setTime(text)}
+                />
 
-            <TextInput
-                label="Slave"
-                style={styles.inputStyle}
-                value={slave}
-                theme={theme}
-                mode="outlined"
-                onChangeText={text => setSlave(text)}
-            />
+                <TextInput
+                    label="Slave"
+                    style={styles.inputStyle}
+                    value={slave}
+                    theme={theme}
+                    mode="outlined"
+                    onChangeText={text => setSlave(text)}
+                />
 
-            {/* <View style={styles.uploadButton}>
+                {/* <View style={styles.uploadButton}>
                 <Button icon="upload"
                     mode="contained"
                     theme={theme}
@@ -66,47 +69,47 @@ const CreateMeal = () => {
                 </Button>
             </View> */}
 
-            <View style={styles.saveButton}>
-                <Button icon="content-save"
-                    mode="contained"
-                    theme={theme}
-                    // onPress={() => console.log("save")}>
-                    onPress={() => submitData()}>
-                    Save
-                </Button>
-            </View>
-
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modal}
-                onRequestClose={() => {
-                    setModal(false)
-                }}
-            >
-                <View style={styles.modalView}>
-                    <View style={styles.modalButtomView}>
-                        <Button icon="camera"
-                            theme={theme}
-                            mode="contained"
-                            onPress={() => console.log("presses")}>
-                            camera
-                        </Button>
-
-                        <Button icon="image-area"
-                            mode="contained"
-                            theme={theme}
-                            onPress={() => console.log("presses")}>
-                            gallery
-                        </Button>
-                    </View>
-
-                    <Button onPress={() => setModal(false)}>
-                        cancel
+                <View style={styles.saveButton}>
+                    <Button icon="content-save"
+                        mode="contained"
+                        theme={theme}
+                        // onPress={() => console.log("save")}>
+                        onPress={() => submitData()}>
+                        Save
                     </Button>
                 </View>
-            </Modal>
 
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modal}
+                    onRequestClose={() => {
+                        setModal(false)
+                    }}
+                >
+                    <View style={styles.modalView}>
+                        <View style={styles.modalButtomView}>
+                            <Button icon="camera"
+                                theme={theme}
+                                mode="contained"
+                                onPress={() => console.log("presses")}>
+                                camera
+                            </Button>
+
+                            <Button icon="image-area"
+                                mode="contained"
+                                theme={theme}
+                                onPress={() => console.log("presses")}>
+                                gallery
+                            </Button>
+                        </View>
+
+                        <Button onPress={() => setModal(false)}>
+                            cancel
+                        </Button>
+                    </View>
+                </Modal>
+            </KeyboardAvoidingView>
         </View>
     )
 }

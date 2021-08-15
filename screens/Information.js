@@ -5,7 +5,7 @@ import { Card, Title, Button } from 'react-native-paper'
 
 const Information = (props) => { 
 
-    const {id,meal,slave,time,picture} = props.route.params.item
+    const {_id,meal,slave,time,picture} = props.route.params.item
     return (
         <View style={styles.root}>
             <LinearGradient
