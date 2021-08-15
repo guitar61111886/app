@@ -1,11 +1,33 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Card, Title, Button } from 'react-native-paper'
 
-const Information = (props) => { 
+const Information = (props) => {
 
-    const {_id,meal,slave,time,picture} = props.route.params.item
+    const { _id, meal, slave, time, picture } = props.route.params.item
+    // console.log(_id)
+
+    const deleteInformation = () => {
+        fetch("http://172.20.10.5:3000/delete", {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: _id
+            })
+        })
+            .then(res => res.json())
+            .then(deleteInf => {
+                Alert.alert(`${deleteInf.name} deleted`)
+                props.navigation.navigate("Home")
+            })
+            .catch(err => {
+                Alert.alert("Someting went wrong")
+            })
+    }
+
     return (
         <View style={styles.root}>
             <LinearGradient
@@ -21,7 +43,7 @@ const Information = (props) => {
                 />
             </View>
 
-            <View style={{ alignItems: 'center',margin:15 }}>
+            <View style={{ alignItems: 'center', margin: 15 }}>
                 <Title>{meal}</Title>
                 <Text style={styles.mytext}>{slave}</Text>
             </View>
@@ -44,7 +66,7 @@ const Information = (props) => {
                 </View>
             </Card>
 
-            <View style={{ flexDirection: "row", justifyContent: "space-around", padding:10 }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-around", padding: 10 }}>
                 <Button
                     icon="playlist-edit"
                     mode="contained"
@@ -57,7 +79,8 @@ const Information = (props) => {
                     icon="delete"
                     mode="contained"
                     theme={theme}
-                    onPress={() => console.log('Pressed')}>
+                    // onPress={() => console.log('Pressed')}>
+                    onPress={() => deleteInformation()}>
                     Delete
                 </Button>
             </View>
