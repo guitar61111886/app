@@ -3,10 +3,23 @@ import { View, StyleSheet, Text, Modal, Alert, KeyboardAvoidingView } from 'reac
 import { TextInput, Button } from 'react-native-paper'
 // import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
-const CreateMeal = ({ navigation }) => {
-    const [meal, setMeal] = useState("")
-    const [time, setTime] = useState("")
-    const [slave, setSlave] = useState("")
+const CreateMeal = ({ navigation, route }) => {
+    const getDetails = (type) => {
+        if (route.params) {
+            // console.log(route.params)
+            switch (type) {
+                case "meal":
+                    return route.params.meal
+                case "time":
+                    return route.params.time
+                case "slave":
+                    return route.params.slave
+            }
+        } return ""
+    }
+    const [meal, setMeal] = useState(getDetails("meal"))
+    const [time, setTime] = useState(getDetails("time"))
+    const [slave, setSlave] = useState(getDetails("slave"))
     const [modal, setModal] = useState(false)
 
     const submitData = () => {

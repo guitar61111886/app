@@ -5,7 +5,7 @@ import { Card, Title, Button } from 'react-native-paper'
 
 const Information = (props) => {
 
-    const { _id, meal, slave, time, picture } = props.route.params.item
+    const { _id, meal, slave, time } = props.route.params.item
     // console.log(_id)
 
     const deleteInformation = () => {
@@ -36,12 +36,12 @@ const Information = (props) => {
             />
             {/* <Text>Alarm Data</Text> */}
 
-            <View style={{ alignItems: "center" }}>
+            {/* <View style={{ alignItems: "center" }}>
                 <Image
                     style={{ width: 140, height: 140, borderRadius: 140 / 2, marginTop: -50 }}
                     source={{ uri: picture }}
                 />
-            </View>
+            </View> */}
 
             <View style={{ alignItems: 'center', margin: 15 }}>
                 <Title>{meal}</Title>
@@ -71,7 +71,11 @@ const Information = (props) => {
                     icon="playlist-edit"
                     mode="contained"
                     theme={theme}
-                    onPress={() => console.log('Pressed')}>
+                    // onPress={() => console.log('Pressed')}>
+                    onPress={() => {
+                        props.navigation.navigate("Create", 
+                        { _id, meal, slave, time })
+                    }}>
                     Edit
                 </Button>
 

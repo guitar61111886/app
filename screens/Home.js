@@ -26,7 +26,7 @@ const Home = ({ navigation }) => {
         fetch("http://172.20.10.5:3000/")
             .then(res => res.json())
             .then(results => {
-                console.log(results)
+                // console.log(results)
                 setData(results)
                 setloading(false)
             }).catch(err => {
