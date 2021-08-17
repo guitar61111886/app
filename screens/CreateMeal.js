@@ -38,7 +38,32 @@ const CreateMeal = ({ navigation, route }) => {
             .then(data => {
                 // Alert.alert('Form Data', data);
                 // console.log(data);
-                Alert.alert(`${data.meal} is saved successfuly`)
+                Alert.alert(`${data.meal} is saved successfully`)
+                navigation.navigate("Home")
+            })
+            .catch(err => {
+                Alert.alert("Someting went wrong")
+            })
+    }
+
+    const updateData = () =>{
+        fetch("http://172.20.10.5:3000/update", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id:route.params._id,
+                meal: meal,
+                time: time,
+                slave: slave
+            })
+        })
+            .then((res) => res.json())
+            .then(data => {
+                // Alert.alert('Form Data', data);
+                // console.log(data);
+                Alert.alert(`${data.meal} is updated successfully`)
                 navigation.navigate("Home")
             })
             .catch(err => {
@@ -85,15 +110,27 @@ const CreateMeal = ({ navigation, route }) => {
                 </Button>
             </View> */}
 
-                <View style={styles.saveButton}>
-                    <Button icon="content-save"
-                        mode="contained"
-                        theme={theme}
-                        // onPress={() => console.log("save")}>
-                        onPress={() => submitData()}>
-                        Save
-                    </Button>
-                </View>
+                {route.params ?
+                    <View style={styles.saveButton}>
+                        <Button icon="content-save"
+                            mode="contained"
+                            theme={theme}
+                            // onPress={() => console.log("save")}>
+                            onPress={() => updateData()}>
+                            Update
+                        </Button>
+                    </View>
+                    :
+                    <View style={styles.saveButton}>
+                        <Button icon="content-save"
+                            mode="contained"
+                            theme={theme}
+                            // onPress={() => console.log("save")}>
+                            onPress={() => submitData()}>
+                            Save
+                        </Button>
+                    </View>
+                }
 
                 <Modal
                     animationType="slide"
